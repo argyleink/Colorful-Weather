@@ -1,11 +1,11 @@
 var MF = {
   hundreds: [
     'Holy Balls! Your city is melting, get the fuck out. Find ice.',
-    'Hundreds 2'
+    'Balls of fire!'
   ],
   nineties: [
     'You must be almost naked, shit is hot out there.',
-    'Nineties message 2'
+    'Everyone has a sweaty crotch right now. Sick.'
   ],
   eighties: [
     'Fuck yeah. Today is a nice day bitches.',
@@ -28,44 +28,69 @@ var MF = {
     'Fourties message 2'
   ],
   thirties: [
-    'thirties message 1',
+    'Jesus dick I hope you\'re warm.',
     'thirties message 2'
   ],
   twenties: [
-    'twenties message 1',
-    'twenties message 2'
+    'Cold as a witches tit.',
+    'Cold as FUCK. GLHF.'
   ]
 };
 
-var UI = require('ui');
-var Vector2 = require('vector2');
+var UI        = require('ui')
+  , Vector2   = require('vector2')
+  , Vibe      = require('ui/vibe')
+  , Ajax      = require('ajax');
 
-var textfield = new UI.Text({
+// Loading Message
+var loading = new UI.Window();
+loading.add(new UI.Text({
   position:   new Vector2(0, 50),
   size:       new Vector2(144, 30),
-  font:       'gothic-24-bold',
+  font:       'gothic-12-bold',
   text:       'Bitch wait...',
   textAlign:  'center'
-});
-
-var loading = new UI.Window();
-loading.add(textfield);
+}));
 loading.show();
 
+// GPS and Weather
 function locationSuccess(pos) {
   var coordinates = pos.coords;
   fetchWeather(coordinates.latitude, coordinates.longitude);
 }
 
 function locationError(err) {
-  console.warn('location error (' + err.code + '): ' + err.message);
   textfield.text('GPS broke yo');
+  console.warn('location error (' + err.code + '): ' + err.message);
 }
 
 var locationOptions = { "timeout": 15000, "maximumAge": 60000 }; 
 
 function fetchWeather(latitude, longitude) {
-  var response, temperature, city;
+  var temperature, city;
+
+  // Ajax({
+  //   url: 'http://api.openweathermap.org/data/2.1/find/city',
+  //   data: {
+  //     lat: latitude,
+  //     lon: longitude,
+  //     cnt: 1
+  //   },
+  //   type: 'json'
+  // }, function(response){
+  //   if (response && response.list && response.list.length > 0) {
+  //     var weatherResult = response.list[0];
+
+  //     temperature = convertToFahrenheit(Math.round(weatherResult.main.temp - 273.15));
+  //     city = weatherResult.name;
+
+  //     determineCrassMessage(temperature, city);
+  //   }
+  // }, function(error){
+  //   textfield.text('API broke yo');
+  //   console.warn(error.message);
+  // });
+
   var req = new XMLHttpRequest();
   req.open('GET', "http://api.openweathermap.org/data/2.1/find/city?" + "lat=" + latitude + "&lon=" + longitude + "&cnt=1", true);
 
@@ -127,14 +152,16 @@ function determineCrassMessage(temp, city) {
 }
 
 function showWeather(temp, city, message) {
-  var card = new UI.Card();
-  
-  card.title('Fuckin ' + temp + "\u00B0F");
-  card.subtitle('in ' + city + '...');
-  card.body(message);
-  
-  card.show();
+  var card = new UI.Card({
+    title:      'Fuckin ' + temp + "\u00B0F",
+    subtitle:   'in ' + city + ';',
+    body:       message,
+    scrollable: true
+  }).show();
+
+  Vibe.vibrate('short');
   loading.hide();
 }
 
+// init by getting geo
 window.navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
