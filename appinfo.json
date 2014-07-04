@@ -1,5 +1,5 @@
 {
-  "uuid": "133215f0-cf20-4c05-997b-3c9be5a64e5b",
+  "uuid": "8c482272-b01d-435b-a468-f8ba486a2447",
   "shortName": "MF'n Weather",
   "longName": "Mutha F'in Weather",
   "companyName": "ArgyleInk",
@@ -9,6 +9,7 @@
     "watchface": false
   },
   "appKeys": {},
+  "capabilities": [ "location" ],
   "resources": {
     "media": [
       {
