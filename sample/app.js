@@ -43,9 +43,7 @@ function fetchWeather(latitude, longitude) {
           temperature = convertToFahrenheit(Math.round(weatherResult.main.temp - 273.15));
           city = weatherResult.name;
 
-          console.log(temperature);
-          console.log(city);
-          textfield.text('It is ' + temperature + "\u00B0F" + ' in ' + city);
+          determineCrassMessage(temperature, city);
         }
 
       } else {
@@ -58,4 +56,20 @@ function fetchWeather(latitude, longitude) {
 
 function convertToFahrenheit(celcius) {
   return celcius * 1.8 + 32;
+}
+
+function determineCrassMessage(temp, city) {
+  var message;
+
+  if (temp < 50)
+    message = 'Cold as balls yo.'
+  else (temp >= 50)
+    message = 'Shit could be worse.'
+
+  var card = new UI.Card();
+  card.title(temp + "\u00B0F");
+  card.subtitle('In ' + city + '...');
+  card.body(message);
+  card.show();
+  // textfield.text('It is ' + temp + "\u00B0F" + ' in ' + city + message);
 }
