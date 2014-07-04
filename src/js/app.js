@@ -1,39 +1,42 @@
 var MF = {
   hundreds: [
     'Holy Balls! Your city is melting, get the fuck out. Find ice.',
-    'Balls of fire!'
+    'Balls of fire! Hide yo kids, hide yo wives.'
   ],
   nineties: [
     'You must be almost naked, shit is hot out there.',
     'Everyone has a sweaty crotch right now. Sick.'
   ],
   eighties: [
-    'Fuck yeah. Today is a nice day bitches.',
-    'Eighties message 2'
+    'Fuck yeah. Today is a nice day bitches. Soack that shit up.',
+    'Shit yeah, rock that sun baby.'
   ],
   seventies: [
     'Wear whatever the fuck you want weather, fuck yeah.',
-    'Seventies message 2'
+    'Meh.',
+    'Calm and sunny, but the air is full of bullshit.'
   ],
   sixties: [
     'Kinda shitty, but not too shitty. L\'il shitty I guess.',
-    'Sixties message 2'
+    'Fuck the sixties. Decide a heat damnit.'
   ],
   fifties: [
     'Shit could be worse',
-    'Fifties message 2'
+    'L\'l nippy out, give yours a quick rub so they stay happy.'
   ],
   fourties: [
-    'Fourties message 1',
-    'Fourties message 2'
+    'Cold as balls. Grab a double layer and some gloves homie.',
+    'Cold as shit.',
+    'Nuts be freezin, cup em if you got em.'
   ],
   thirties: [
     'Jesus dick I hope you\'re warm.',
-    'thirties message 2'
+    'Holy shit Batman, it\'s cold as shit out.'
   ],
   twenties: [
     'Cold as a witches tit.',
-    'Cold as FUCK. GLHF.'
+    'Cold as FUCK. GLHF.',
+    'Cold as hell, damn!'
   ]
 };
 
@@ -47,7 +50,7 @@ var loading = new UI.Window();
 loading.add(new UI.Text({
   position:   new Vector2(0, 50),
   size:       new Vector2(144, 30),
-  font:       'gothic-12-bold',
+  font:       'gothic-24-bold',
   text:       'Bitch wait...',
   textAlign:  'center'
 }));
