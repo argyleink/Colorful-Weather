@@ -1,42 +1,72 @@
 var MF = {
   hundreds: [
-    'Holy Balls! Your city is melting, get the fuck out. Find ice.',
-    'Balls of fire! Hide yo kids, hide yo wives.'
+    "Holy balls! Your city is melting, get the fuck out.",
+    "Hide yo kids, hide yo wives. It’s fuckin hot.",
+    "Hot damn mutha fucka, find shade bitch.",
+    "Ouch, shit’s hot outside. Nice day to stay inside.",
+    "I hope you’re around A/C, otherwise you're dinner.",
+    "Hotter than the hinges of hell.",
+    "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
+    "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight."
   ],
   nineties: [
-    'You must be almost naked, shit is hot out there.',
-    'Everyone has a sweaty crotch right now. Sick.'
+    "You must be almost naked, shit is hot.",
+    "Everyone has a sweaty crotch right now. Sick.",
+    "Fuck you, fuck you, fuck you. Enjoy the sun ass hole.",
+    "All dark places of the body are moist right now.",
+    "As Dan would say, “shit’s fucked up.” That means it’s good.",
+    "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
+    "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight."
   ],
   eighties: [
-    'Fuck yeah. Today is a nice day bitches. Soack that shit up.',
-    'Shit yeah, rock that sun baby.'
+    "Fuck yeah. Today is a nice day bitches. Soak that shit up.",
+    "Shit yeah, rock that sun baby.",
+    "Fuck you, I love 80’s.",
+    "Fuckin A yo, shit’s gonna be alright.",
+    "Fuck you cold days, today’s nice."
   ],
   seventies: [
-    'Wear whatever the fuck you want weather, fuck yeah.',
-    'Meh.',
-    'Calm and sunny, but the air is full of bullshit.'
+    "Wear whatever the fuck you want weather, fuck yeah.",
+    "Meh. Fuck it.",
+    "Fuckin A, it’s alright."
   ],
   sixties: [
-    'Kinda shitty, but not too shitty. L\'il shitty I guess.',
-    'Fuck the sixties. Decide a heat damnit.'
+    "Kinda shitty, but not too shitty. L'il shitty I guess.",
+    "Fuck the sixties. Decide a heat damnit.",
+    "Fuckin whatever. Fuck it.",
+    "Could be shitier."
   ],
   fifties: [
-    'Shit could be worse',
-    'L\'l nippy out, give yours a quick rub so they stay happy.'
+    "Fuck this fuckin 50’s… but shit could be worse.",
+    "L'il nippy out, give yours a quick rub so they stay happy.",
+    "Shitty.",
+    "Fuckin 50’s, again. Fuck.",
+    "Fuck my life, 50’s.",
+    "Fuckin moisture convergence."
   ],
   fourties: [
-    'Cold as balls. Grab a double layer and some gloves homie.',
-    'Cold as shit.',
-    'Nuts be freezin, cup em if you got em.'
+    "Cold as balls. Grab a double layer and some gloves homie.",
+    "Cold as shit.",
+    "Nuts be freezin, cup em if you got em.",
+    "Fuckin shitty bro."
   ],
   thirties: [
-    'Jesus dick I hope you\'re warm.',
-    'Holy shit Batman, it\'s cold as shit out.'
+    "Jesus dick I hope you're warm.",
+    "Holy shit Batman, it's cold as shit out.",
+    "Shitty as fuck, fuckin shitty, SHIT FUCK.",
+    "You be chillin. Got icicles on your butt hole."
   ],
   twenties: [
-    'Cold as a witches tit.',
-    'Cold as FUCK. GLHF.',
-    'Cold as hell, damn!'
+    "Cold as a witches tit.",
+    "Cold as FUCK. GLHF.",
+    "Cold as hell, damn!",
+    "F-f-f-f-f-f-u-u-u-u-c-c-c-k-k-k-k- k-k-k k-k-k-k-k.",
+    "So cold you need a sock for your dick, or it might freeze off."
+  ],
+  crazies: [
+    "Fuckin crazy, Armageddon shit. Check your fuckin bucket list.",
+    "Game over.",
+    "Why the fuck are you wherever the fuck you are, holy shit mang, damn!"
   ]
 };
 
@@ -149,7 +179,7 @@ function determineCrassMessage(temp, city) {
   else if (temp >= 20)
     message = MF.twenties[getRandomInt(0,MF.twenties.length - 1)]
   else
-    message = 'Fuckin crazy, Armageddon shit.'
+    message = MF.crazies[getRandomInt(0,MF.crazies.length - 1)]
 
   showWeather(temp, city, message);
 }
