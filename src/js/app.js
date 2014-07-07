@@ -5,7 +5,7 @@ var MF = {
     "Hot damn mutha fucka, find shade bitch.",
     "Ouch, shit’s hot outside. Nice day to stay inside.",
     "I hope you’re around A/C, otherwise you're dinner.",
-    "Hotter than the hinges of hell.",
+    "Hotter than the mutha fuckin hinges of hell.",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
     "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight."
   ],
@@ -166,6 +166,8 @@ function getRandomInt(min, max) {
 
 function determineCrassMessage(temp, city) {
   var message;
+  // temp = 46;
+  // city = 'Portland';
 
   if (temp >= 100 && temp < 105)
     message = MF.hundreds[getRandomInt(0,MF.hundreds.length - 1)]
@@ -192,7 +194,6 @@ function determineCrassMessage(temp, city) {
 }
 
 function showWeather(temp, city, message) {
-  city = 'Los Angelesness';
   if (city.length > 12) city = city.substr(0,10) + '..';
 
   var card = new UI.Card({
