@@ -192,9 +192,12 @@ function determineCrassMessage(temp, city) {
 }
 
 function showWeather(temp, city, message) {
+  city = 'Los Angelesness';
+  if (city.length > 12) city = city.substr(0,10) + '..';
+
   var card = new UI.Card({
     title:      'Fuckin ' + temp + "\u00B0F",
-    subtitle:   'in ' + city + ';',
+    subtitle:   'in ' + city,
     body:       message,
     scrollable: true
   }).show();
