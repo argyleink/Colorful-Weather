@@ -67,22 +67,29 @@ var MF = {
     "Fuckin crazy, Armageddon shit. Check your fuckin bucket list.",
     "Game over.",
     "Why the fuck are you wherever the fuck you are, holy shit mang, damn!"
+  ],
+  loading: [
+    "Bitch wait...",
+    "Wait mofo...",
+    "Wait sucka...",
+    "Fuckin wait...",
+    "Fuck again..."
   ]
 };
 
 var UI        = require('ui')
   , Vector2   = require('vector2')
-  , Vibe      = require('ui/vibe')
-  , Ajax      = require('ajax');
+  // , Ajax      = require('ajax')
+  , Vibe      = require('ui/vibe');
 
 // Loading Message
 var loading = new UI.Window();
 loading.add(new UI.Text({
-  position:   new Vector2(0, 50),
-  size:       new Vector2(144, 30),
-  font:       'gothic-24-bold',
-  text:       'Bitch wait...',
-  textAlign:  'center'
+  position:         new Vector2(0, 50),
+  size:             new Vector2(144, 30),
+  font:             'gothic-24-bold',
+  text:             MF.loading[getRandomInt(0,MF.loading.length - 1)],
+  textAlign:        'center'
 }));
 loading.show();
 
