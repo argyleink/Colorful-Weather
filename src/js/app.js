@@ -154,8 +154,8 @@ function fetchWeather(latitude, longitude) {
   req.send(null);
 }
 
-function convertToFahrenheit(celcius) {
-  return Math.round(celcius * 1.8) + 32;
+function convertToFahrenheit(celsius) {
+  return Math.round(celsius * 1.8) + 32;
 }
 
 function getRandomInt(min, max) {
@@ -240,8 +240,8 @@ function showSettings() {
     sections: [{
       title: 'Degrees Setting:',
       items: [
-        { title: 'Farhenheit' }, 
-        { title: 'Celcius' }
+        { title: degrees.f }, 
+        { title: degrees.c }
       ]
     }]
   }).show();
