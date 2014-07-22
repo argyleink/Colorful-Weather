@@ -22,8 +22,8 @@ var MF = {
   eighties: [
     "Fuck yeah. Today is a nice day bitches. Soak that shit up.",
     "Shit yeah, rock that sun baby.",
-    "Fuck you, I love 80’s.",
-    "Fuckin A yo, shit’s gonna be alright.",
+    "Fuck you, it's nice as balls out.",
+    "Fuckin' A yo, shit’s gonna be alright.",
     "Fuck you cold days, today’s nice.",
     "Holy shit, fuckin amazeballs."
   ],
@@ -35,17 +35,17 @@ var MF = {
   ],
   sixties: [
     "Kinda shitty, but not too shitty. L'il shitty I guess.",
-    "Fuck the sixties. Decide a heat damnit.",
+    "Fuck it outside. Decide a temperature bitch.",
     "Fuckin whatever. Fuck it.",
-    "Could be shitier.",
+    "Could be shitier. Or is it shittier? Meh.",
     "Fuckin alright."
   ],
   fifties: [
-    "Fuck this fuckin 50’s… but shit could be worse.",
+    "Fuck this fuckin shit… but fuck, could be worse.",
     "L'il nippy out, give yours a quick rub so they stay happy.",
     "Shitty.",
-    "Fuckin 50’s, again. Fuck.",
-    "Fuck my life, 50’s.",
+    "Fuckin lame, again. Fuck.",
+    "Doom and gloom bitch.",
     "Fuckin moisture convergence."
   ],
   fourties: [
