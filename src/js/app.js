@@ -81,23 +81,31 @@ var MF = {
   ]
 };
 
+var degrees = {
+  c: '\u00B0C',
+  f: '\u00B0F'
+};
+
 var UI        = require('ui')
   , Vector2   = require('vector2')
-  // , Ajax      = require('ajax')
-  , Vibe      = require('ui/vibe');
+  , Vibe      = require('ui/vibe')
+  , Settings  = require('settings')
+  , loading;
+
+// set options to default at fahrenheit
+if (!Settings.data('degrees'))
+  Settings.data('degrees', 'f');
 
 // Loading Message
-var loading = new UI.Window({
-  clear: true
-});
-loading.add(new UI.Text({
-  position:         new Vector2(0, 50),
-  size:             new Vector2(144, 30),
-  font:             'gothic-24-bold',
-  text:             MF.loading[getRandomInt(0,MF.loading.length - 1)],
-  textAlign:        'center'
-}));
-loading.show();
+loading = new UI.Window()
+  .add(new UI.Text({
+    position:         new Vector2(0, 50),
+    size:             new Vector2(144, 30),
+    font:             'gothic-24-bold',
+    text:             MF.loading[getRandomInt(0,MF.loading.length - 1)],
+    textAlign:        'center'
+  }))
+  .show();
 
 // GPS and Weather
 function locationSuccess(pos) {
@@ -126,7 +134,13 @@ function fetchWeather(latitude, longitude) {
         if (response && response.list && response.list.length > 0) {
           var weatherResult = response.list[0];
 
-          temperature = convertToFahrenheit(Math.round(weatherResult.main.temp - 273.15));
+          if (getUserDegreeSetting() === 'c') {
+            temperature = Math.round(weatherResult.main.temp - 273.15);
+          }
+          else {
+            temperature = convertToFahrenheit(Math.round(weatherResult.main.temp - 273.15));
+          }
+          
           city = weatherResult.name;
 
           determineCrassMessage(temperature, city);
@@ -150,50 +164,114 @@ function getRandomInt(min, max) {
 
 function determineCrassMessage(temp, city) {
   var message;
+
+  // TEST DATA: kinda for screenshots
   // temp = 46;
   // city = 'Portland';
 
-  if (temp >= 100 && temp < 105)
-    message = MF.hundreds[getRandomInt(0,MF.hundreds.length - 1)]
-  else if (temp >= 90)
-    message = MF.nineties[getRandomInt(0,MF.nineties.length - 1)]
-  else if (temp >= 80)
-    message = MF.eighties[getRandomInt(0,MF.eighties.length - 1)]
-  else if (temp >= 70)
-    message = MF.seventies[getRandomInt(0,MF.seventies.length - 1)]
-  else if (temp >= 60)
-    message = MF.sixties[getRandomInt(0,MF.sixties.length - 1)]
-  else if (temp >= 50)
-    message = MF.fifties[getRandomInt(0,MF.fifties.length - 1)]
-  else if (temp >= 40)
-    message = MF.fourties[getRandomInt(0,MF.fourties.length - 1)]
-  else if (temp >= 30)
-    message = MF.thirties[getRandomInt(0,MF.thirties.length - 1)]
-  else if (temp >= 20)
-    message = MF.twenties[getRandomInt(0,MF.twenties.length - 1)]
-  else
-    message = MF.crazies[getRandomInt(0,MF.crazies.length - 1)]
+  // IF F
+  if (getUserDegreeSetting() === 'f') {
+    if (temp >= 100 && temp < 105)
+      message = MF.hundreds[getRandomInt(0,MF.hundreds.length - 1)]
+    else if (temp >= 90)
+      message = MF.nineties[getRandomInt(0,MF.nineties.length - 1)]
+    else if (temp >= 80)
+      message = MF.eighties[getRandomInt(0,MF.eighties.length - 1)]
+    else if (temp >= 70)
+      message = MF.seventies[getRandomInt(0,MF.seventies.length - 1)]
+    else if (temp >= 60)
+      message = MF.sixties[getRandomInt(0,MF.sixties.length - 1)]
+    else if (temp >= 50)
+      message = MF.fifties[getRandomInt(0,MF.fifties.length - 1)]
+    else if (temp >= 40)
+      message = MF.fourties[getRandomInt(0,MF.fourties.length - 1)]
+    else if (temp >= 30)
+      message = MF.thirties[getRandomInt(0,MF.thirties.length - 1)]
+    else if (temp >= 20)
+      message = MF.twenties[getRandomInt(0,MF.twenties.length - 1)]
+    else
+      message = MF.crazies[getRandomInt(0,MF.crazies.length - 1)]
+  }
+  // ELSE C
+  else {
+    if (temp >= 38 && temp < 41)
+      message = MF.hundreds[getRandomInt(0,MF.hundreds.length - 1)]
+    else if (temp >= 32)
+      message = MF.nineties[getRandomInt(0,MF.nineties.length - 1)]
+    else if (temp >= 27)
+      message = MF.eighties[getRandomInt(0,MF.eighties.length - 1)]
+    else if (temp >= 21)
+      message = MF.seventies[getRandomInt(0,MF.seventies.length - 1)]
+    else if (temp >= 16)
+      message = MF.sixties[getRandomInt(0,MF.sixties.length - 1)]
+    else if (temp >= 10)
+      message = MF.fifties[getRandomInt(0,MF.fifties.length - 1)]
+    else if (temp >= 5)
+      message = MF.fourties[getRandomInt(0,MF.fourties.length - 1)]
+    else if (temp >= 0)
+      message = MF.thirties[getRandomInt(0,MF.thirties.length - 1)]
+    else if (temp >= -5)
+      message = MF.twenties[getRandomInt(0,MF.twenties.length - 1)]
+    else
+      message = MF.crazies[getRandomInt(0,MF.crazies.length - 1)]
+  }
 
   showWeather(temp, city, message);
 }
 
 function showWeather(temp, city, message) {
+  Vibe.vibrate('short');
   if (city.length > 12) city = city.substr(0,10) + '..';
 
   var card = new UI.Card({
-    title:      'Fuckin ' + temp + "\u00B0F",
+    title:      'Fuckin ' + temp + degrees[getUserDegreeSetting()],
     subtitle:   'in ' + city,
     body:       message,
     scrollable: true
   }).show();
 
-  Vibe.vibrate('short');
   loading.hide();
+
+  card.on('click', 'select', showSettings);
+}
+
+function showSettings() {
+  var menu = new UI.Menu({
+    sections: [{
+      title: 'Degrees Setting:',
+      items: [
+        { title: 'Farhenheit' }, 
+        { title: 'Celcius' }
+      ]
+    }]
+  }).show();
+
+  menu.on('select', function(e){
+    switch(e.item) {
+      case 0:
+        Settings.data('degrees', 'f');
+        break;
+      case 1:
+        Settings.data('degrees', 'c');
+        break;
+    }
+
+    // reset card view to new degrees
+    init();
+    menu.hide();
+  });
+}
+
+function getUserDegreeSetting() {
+  return Settings.data('degrees');
 }
 
 // init by getting geo
-window.navigator.geolocation.getCurrentPosition(
-  locationSuccess, 
-  locationError, 
-  locationOptions
-);
+function init() {
+  window.navigator.geolocation.getCurrentPosition(
+    locationSuccess, 
+    locationError, 
+    locationOptions
+  );
+}
+init();
