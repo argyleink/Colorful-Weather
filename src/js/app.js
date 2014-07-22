@@ -16,25 +16,29 @@ var MF = {
     "All dark places of the body are moist right now.",
     "As Dan would say, “shit’s fucked up.” That means it’s good.",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
-    "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight."
+    "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight.",
+    "Holy shit, fuckin amazeballs."
   ],
   eighties: [
     "Fuck yeah. Today is a nice day bitches. Soak that shit up.",
     "Shit yeah, rock that sun baby.",
     "Fuck you, I love 80’s.",
     "Fuckin A yo, shit’s gonna be alright.",
-    "Fuck you cold days, today’s nice."
+    "Fuck you cold days, today’s nice.",
+    "Holy shit, fuckin amazeballs."
   ],
   seventies: [
     "Wear whatever the fuck you want weather, fuck yeah.",
     "Meh. Fuck it.",
-    "Fuckin A, it’s alright."
+    "Fuckin A, it’s alright.",
+    "Fuckin coo."
   ],
   sixties: [
     "Kinda shitty, but not too shitty. L'il shitty I guess.",
     "Fuck the sixties. Decide a heat damnit.",
     "Fuckin whatever. Fuck it.",
-    "Could be shitier."
+    "Could be shitier.",
+    "Fuckin alright."
   ],
   fifties: [
     "Fuck this fuckin 50’s… but shit could be worse.",
@@ -83,7 +87,9 @@ var UI        = require('ui')
   , Vibe      = require('ui/vibe');
 
 // Loading Message
-var loading = new UI.Window();
+var loading = new UI.Window({
+  clear: true
+});
 loading.add(new UI.Text({
   position:         new Vector2(0, 50),
   size:             new Vector2(144, 30),
@@ -108,28 +114,6 @@ var locationOptions = { "timeout": 15000, "maximumAge": 60000 };
 
 function fetchWeather(latitude, longitude) {
   var temperature, city;
-
-  // Ajax({
-  //   url: 'http://api.openweathermap.org/data/2.1/find/city',
-  //   data: {
-  //     lat: latitude,
-  //     lon: longitude,
-  //     cnt: 1
-  //   },
-  //   type: 'json'
-  // }, function(response){
-  //   if (response && response.list && response.list.length > 0) {
-  //     var weatherResult = response.list[0];
-
-  //     temperature = convertToFahrenheit(Math.round(weatherResult.main.temp - 273.15));
-  //     city = weatherResult.name;
-
-  //     determineCrassMessage(temperature, city);
-  //   }
-  // }, function(error){
-  //   textfield.text('API broke yo');
-  //   console.warn(error.message);
-  // });
 
   var req = new XMLHttpRequest();
   req.open('GET', "http://api.openweathermap.org/data/2.1/find/city?" + "lat=" + latitude + "&lon=" + longitude + "&cnt=1", true);
@@ -208,4 +192,8 @@ function showWeather(temp, city, message) {
 }
 
 // init by getting geo
-window.navigator.geolocation.watchPosition(locationSuccess, locationError, locationOptions);
+window.navigator.geolocation.getCurrentPosition(
+  locationSuccess, 
+  locationError, 
+  locationOptions
+);
