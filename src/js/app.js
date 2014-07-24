@@ -24,7 +24,7 @@ var MF = {
     "Shit yeah, rock that sun baby.",
     "Fuck you, it's nice as balls out.",
     "Fuckin' A yo, shit’s gonna be alright.",
-    "Fuck you cold days, today’s nice.",
+    "Fuck you cold days, today's nice.",
     "Holy shit, fuckin amazeballs."
   ],
   seventies: [
