@@ -74,8 +74,8 @@ var MF = {
   ],
   loading: [
     "Bitch wait...",
-    "Wait mofo...",
-    "Wait sucka...",
+    "Fetchin shit",
+    "Wait bitch...",
     "Fuckin wait...",
     "Fuck again..."
   ]
@@ -86,72 +86,79 @@ var degrees = {
   f: '\u00B0F'
 };
 
-var UI        = require('ui')
-  , Vector2   = require('vector2')
-  , Vibe      = require('ui/vibe')
-  , Settings  = require('settings')
-  , loading;
+var UI = require('ui');
+var ajax = require('ajax');
+var Accel = require('ui/accel');
+var Vibe = require('ui/vibe');
+var Vector2 = require('vector2');
+var Settings = require('settings');
+var loading, report;
+
+// Create a Card with title and subtitle
+function showLoading() {
+  loading = new UI.Window()
+    .add(new UI.Text({
+      position:         new Vector2(0, 50),
+      size:             new Vector2(144, 30),
+      font:             'gothic-24-bold',
+      text:             MF.loading[getRandomInt(0,MF.loading.length - 1)],
+      textAlign:        'center'
+    }))
+    .show();
+}
+showLoading();
 
 // set options to default at fahrenheit
 if (!Settings.data('degrees'))
   Settings.data('degrees', 'f');
 
-// Loading Message
-loading = new UI.Window()
-  .add(new UI.Text({
-    position:         new Vector2(0, 50),
-    size:             new Vector2(144, 30),
-    font:             'gothic-24-bold',
-    text:             MF.loading[getRandomInt(0,MF.loading.length - 1)],
-    textAlign:        'center'
-  }))
-  .show();
-
 // GPS and Weather
+var locationOptions = { 
+  "timeout": 2000, 
+  "maximumAge": 60000 
+} 
+
 function locationSuccess(pos) {
   var coordinates = pos.coords;
-  fetchWeather(coordinates.latitude, coordinates.longitude);
+  getWeather(coordinates.latitude, coordinates.longitude);
 }
 
 function locationError(err) {
-  textfield.text('GPS broke yo');
+  loading.text('GPS broke yo');
   console.warn('location error (' + err.code + '): ' + err.message);
 }
 
-var locationOptions = { "timeout": 15000, "maximumAge": 60000 }; 
+function getWeather(latitude, longitude) {
+  // Make the request
+  ajax({
+      url: 'http://api.openweathermap.org/data/2.5/weather?lat='+ latitude +'&lon=' + longitude,
+      type: 'json'
+    },
+    function(data) {
+      // Success!
+      console.log("Successfully fetched the fucking weather data!");
 
-function fetchWeather(latitude, longitude) {
-  var temperature, city;
+      // for (var item in data)
+      //   console.log(item + ' ' + data[item]);
 
-  var req = new XMLHttpRequest();
-  req.open('GET', "http://api.openweathermap.org/data/2.1/find/city?" + "lat=" + latitude + "&lon=" + longitude + "&cnt=1", true);
+      // Extract data
+      var temperature;
 
-  req.onload = function(e) {
-    if (req.readyState == 4) {
-      if(req.status == 200) {
-        response = JSON.parse(req.responseText);
-
-        if (response && response.list && response.list.length > 0) {
-          var weatherResult = response.list[0];
-
-          if (getUserDegreeSetting() === 'c') {
-            temperature = Math.round(weatherResult.main.temp - 273.15);
-          }
-          else {
-            temperature = convertToFahrenheit(Math.round(weatherResult.main.temp - 273.15));
-          }
-          
-          city = weatherResult.name;
-
-          determineCrassMessage(temperature, city);
-        }
-
-      } else {
-        console.log("Error");
+      if (getUserDegreeSetting() === 'c') {
+        temperature = Math.round(data.main.temp - 273.15);
       }
+      else {
+        temperature = convertToFahrenheit(Math.round(data.main.temp - 273.15));
+      }
+
+      determineCrassMessage(temperature, data.name);
+    },
+    function(error) {
+      // Failure!
+      loading.text('Fuckin failed.');
+      console.log('Failed fetching weather data: ' + error);
     }
-  }
-  req.send(null);
+  );
 }
 
 function convertToFahrenheit(celsius) {
@@ -221,20 +228,25 @@ function determineCrassMessage(temp, city) {
 
 function showWeather(temp, city, message) {
   Vibe.vibrate('short');
-  if (city.length > 12) city = city.substr(0,10) + '..';
 
-  var card = new UI.Card({
+  report = new UI.Card({
     title:      'Fuckin ' + temp + degrees[getUserDegreeSetting()],
-    subtitle:   'in ' + city,
+    subtitle:   'in ' + city + '...',
     body:       message,
     scrollable: true
   }).show();
 
   loading.hide();
 
-  card.on('click', 'select', showSettings);
+  report.on('click', 'select', showSettings);
+  report.on('accelTap', function(e) {
+    showLoading();
+    report.hide();
+    init();
+  });
 }
 
+// Settings
 function showSettings() {
   var menu = new UI.Menu({
     sections: [{
@@ -257,8 +269,10 @@ function showSettings() {
     }
 
     // reset card view to new degrees
-    init();
+    report.hide();
+    showLoading();
     menu.hide();
+    init();
   });
 }
 
@@ -274,4 +288,8 @@ function init() {
     locationOptions
   );
 }
+
 init();
+
+// Prepare the accelerometer
+Accel.init();
