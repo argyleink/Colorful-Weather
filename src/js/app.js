@@ -6,6 +6,11 @@ var MF = {
     "Ouch, shit’s hot outside. Nice day to stay inside.",
     "I hope you’re around A/C, otherwise you're dinner.",
     "Hotter than the mutha fuckin hinges of hell.",
+    "Hotter than a whore-house on nickel night",
+    "Hot as a haute yogi's yoga pants hanging on the heater.",
+    "It's so hot that my balls are sticking to *your* leg.",
+    "Hotter than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
+    "so muggy, it feels like im standing in a puddle of dick cheese",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
     "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight."
   ],
@@ -14,6 +19,13 @@ var MF = {
     "Everyone has a sweaty crotch right now. Sick.",
     "Fuck you, fuck you, fuck you. Enjoy the sun ass hole.",
     "All dark places of the body are moist right now.",
+    "Humid as a lumberjack's taint",
+    "Hot as Satan's dick.",
+    "It's so hot that my balls are sticking to *your* leg.",
+    "Hotter than a whore-house on nickel night",
+    "Hotter than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
+    "Hot as a haute yogi's yoga pants hanging on the heater.",
+    "so muggy, it feels like im standing in a puddle of dick cheese",
     "As Dan would say, “shit’s fucked up.” That means it’s good.",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
     "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight.",
@@ -25,7 +37,9 @@ var MF = {
     "Fuck you, it's nice as balls out.",
     "Fuckin' A yo, shit’s gonna be alright.",
     "Fuck you cold days, today's nice.",
-    "Holy shit, fuckin amazeballs."
+    "Holy shit, fuckin amazeballs.",
+    "Fuckin nice yo",
+    "Warm as cum"
   ],
   seventies: [
     "Wear whatever the fuck you want weather, fuck yeah.",
@@ -44,26 +58,63 @@ var MF = {
     "Fuck this fuckin shit… but fuck, could be worse.",
     "L'il nippy out, give yours a quick rub so they stay happy.",
     "Shitty.",
+    "Butt ass cold",
     "Fuckin lame, again. Fuck.",
     "Doom and gloom bitch.",
+    "Cold shit mayn",
+    "Frigid as the last icy winter in the hinterlands of your 2nd wife's dead cold hand.",
+    "It's not THAT cold out. Buck up butt hole.",
+    "It's fucking dreary as shit.",
+    "Prepare for the oncoming Eskimo tunnel",
     "Fuckin moisture convergence."
   ],
   fourties: [
     "Cold as balls. Grab a double layer and some gloves homie.",
     "Cold as shit.",
+    "Butt ass cold",
+    "It may be a tit nipply.",
+    "Frigid as the last icy winter in the hinterlands of your 2nd wife's dead cold hand.",
+    "Fuckin Freezing: Extreme cold where your nuts feel like they are going to curl up and disappear.",
     "Nuts be freezin, cup em if you got em.",
-    "Fuckin shitty bro."
+    "Fuckin freezin dude. Rub my nipples.",
+    "It's fucking dreary as shit.",
+    "The temperature would have to drop lower than a dachshund's balls before you could say it's colder than a witch's titty outside.",
+    "You have some frosty holes there friend.",
+    "Weather is giving you an Eskimo tunnel right now.",
+    "Fuckin shitty bro.",
+    "Cold as the ice pick that took me left eye!",
+    "It's colder than a well digger's ass.",
+    "than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
+    "It's colder than a fart in a dead Eskimo"
   ],
   thirties: [
     "Jesus dick I hope you're warm.",
+    "Frigid as the last icy winter in the hinterlands of your 2nd wife's dead cold hand.",
     "Holy shit Batman, it's cold as shit out.",
     "Shitty as fuck, fuckin shitty, SHIT FUCK.",
-    "You be chillin. Got icicles on your butt hole."
+    "You be chillin. Got icicles on your butt hole.",
+    "Weather is giving you 2 Eskimo tunnels right now.",
+    "Butt ass cold",
+    "than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
+    "The temperature would have to drop lower than a dachshund's balls before you could say it's colder than a witch's titty outside.",
+    "These nips could cut glass.",
+    "Colder than a plumber'a ass crack in the Klondike.",
+    "Colder than a polar bear's dick.",
+    "Frosty clams.",
+    "It's colder than a fart in a dead Eskimo",
+    "Your tits must be gone, you froze them off somewhere back there.",
+    "Frozen lips are everywhere."
   ],
   twenties: [
-    "Cold as a witches tit.",
+    "Cold as a witches left tit.",
     "Cold as FUCK. GLHF.",
     "Cold as hell, damn!",
+    "It's colder than an Eskimo's vagina.",
+    "Colder than a plumber'a ass crack in the Klondike.",
+    "My dick's as cold as your heart.",
+    "It's colder than a fart in a dead Eskimo",
+    "Honestly, I'd rather suck a dick than be outside right now.",
+    "You'd make poopsicles if you pooped right now. They'd roll.",
     "F-f-f-f-f-f-u-u-u-u-c-c-c-k-k-k-k- k-k-k k-k-k-k-k.",
     "So cold you need a sock for your dick, or it might freeze off."
   ],
@@ -77,7 +128,8 @@ var MF = {
     "Fetchin shit",
     "Wait bitch...",
     "Fuckin wait...",
-    "Fuck again..."
+    "Fuck again...",
+    "FUCK YOUUUU"
   ]
 };
 
@@ -101,7 +153,7 @@ function showLoading() {
       position:         new Vector2(0, 50),
       size:             new Vector2(144, 30),
       font:             'gothic-24-bold',
-      text:             MF.loading[getRandomInt(0,MF.loading.length - 1)],
+      text:             MF.loading[getRandomInt(0, MF.loading.length - 1)],
       textAlign:        'center'
     }))
     .show();
@@ -109,8 +161,7 @@ function showLoading() {
 showLoading();
 
 // set options to default at fahrenheit
-if (!Settings.data('degrees'))
-  Settings.data('degrees', 'f');
+if (!Settings.data('degrees')) Settings.data('degrees', 'f');
 
 // GPS and Weather
 var locationOptions = { 
