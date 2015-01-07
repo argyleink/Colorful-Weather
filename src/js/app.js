@@ -1,3 +1,10 @@
+var UI        = require('ui');
+var ajax      = require('ajax');
+var Accel     = require('ui/accel');
+var Vibe      = require('ui/vibe');
+var Vector2   = require('vector2');
+var Settings  = require('settings');
+
 var MF = {
   hundreds: [
     "Holy balls! Your city is melting, get the fuck out.",
@@ -9,6 +16,7 @@ var MF = {
     "Hotter than a whore-house on nickel night",
     "Hot as a haute yogi's yoga pants hanging on the heater.",
     "It's so hot that my balls are sticking to *your* leg.",
+    "Hot, sticky, and humid. Leave your balls at home today.",
     "Hotter than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
     "so muggy, it feels like im standing in a puddle of dick cheese",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
@@ -21,6 +29,7 @@ var MF = {
     "All dark places of the body are moist right now.",
     "Humid as a lumberjack's taint",
     "Hot as Satan's dick.",
+    "Hot, sticky, and humid. Leave your balls at home today.",
     "It's so hot that my balls are sticking to *your* leg.",
     "Hotter than a whore-house on nickel night",
     "Hotter than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
@@ -84,18 +93,18 @@ var MF = {
     "Fuckin shitty bro.",
     "Cold as the ice pick that took me left eye!",
     "It's colder than a well digger's ass.",
-    "than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
+    "Colder than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
     "It's colder than a fart in a dead Eskimo"
   ],
   thirties: [
     "Jesus dick I hope you're warm.",
     "Frigid as the last icy winter in the hinterlands of your 2nd wife's dead cold hand.",
-    "Holy shit Batman, it's cold as shit out.",
+    "Holy shit Batman, it's cold as Mr. Freeze's dick n balls out here.",
     "Shitty as fuck, fuckin shitty, SHIT FUCK.",
     "You be chillin. Got icicles on your butt hole.",
     "Weather is giving you 2 Eskimo tunnels right now.",
     "Butt ass cold",
-    "than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
+    "Colder than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
     "The temperature would have to drop lower than a dachshund's balls before you could say it's colder than a witch's titty outside.",
     "These nips could cut glass.",
     "Colder than a plumber'a ass crack in the Klondike.",
@@ -103,7 +112,8 @@ var MF = {
     "Frosty clams.",
     "It's colder than a fart in a dead Eskimo",
     "Your tits must be gone, you froze them off somewhere back there.",
-    "Frozen lips are everywhere."
+    "Frozen lips are everywhere.",
+    "Could freeze the balls off of a monkey!"
   ],
   twenties: [
     "Cold as a witches left tit.",
@@ -116,7 +126,8 @@ var MF = {
     "Honestly, I'd rather suck a dick than be outside right now.",
     "You'd make poopsicles if you pooped right now. They'd roll.",
     "F-f-f-f-f-f-u-u-u-u-c-c-c-k-k-k-k- k-k-k k-k-k-k-k.",
-    "So cold you need a sock for your dick, or it might freeze off."
+    "So cold you need a sock for your dick, or it might freeze off.",
+    "It could turn piss to ice before it hits the ground!"
   ],
   crazies: [
     "Fuckin crazy, Armageddon shit. Check your fuckin bucket list.",
@@ -138,23 +149,19 @@ var degrees = {
   f: '\u00B0F'
 };
 
-var UI = require('ui');
-var ajax = require('ajax');
-var Accel = require('ui/accel');
-var Vibe = require('ui/vibe');
-var Vector2 = require('vector2');
-var Settings = require('settings');
 var loading, report;
 
 // Create a Card with title and subtitle
 function showLoading() {
   loading = new UI.Window()
     .add(new UI.Text({
-      position:         new Vector2(0, 50),
-      size:             new Vector2(144, 30),
+      position:         new Vector2(0, 0),
+      size:             new Vector2(144, 168),
       font:             'gothic-24-bold',
-      text:             MF.loading[getRandomInt(0, MF.loading.length - 1)],
-      textAlign:        'center'
+      text:             '\n\n' + MF.loading[getRandomInt(0, MF.loading.length - 1)],
+      textAlign:        'center',
+      backgroundColor:  'white',
+      color:            'black'
     }))
     .show();
 }
@@ -193,7 +200,7 @@ function getWeather(latitude, longitude) {
       //   console.log(item + ' ' + data[item]);
 
       // Extract data
-      var temperature;
+      var temperature, info;
 
       if (getUserDegreeSetting() === 'c') {
         temperature = Math.round(data.main.temp - 273.15);
@@ -202,7 +209,12 @@ function getWeather(latitude, longitude) {
         temperature = convertToFahrenheit(Math.round(data.main.temp - 273.15));
       }
 
-      determineCrassMessage(temperature, data.name);
+      info = '\n\n Humidity: ' + data.main.humidity;
+      info += '\n Wind: ' + data.wind.speed;
+      // info += '\n Rain: ' + data.rain['3h'];
+      info += '\n ' + data.weather[0].description;
+
+      determineCrassMessage(temperature, data.name, info);
     },
     function(error) {
       // Failure!
@@ -220,7 +232,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function determineCrassMessage(temp, city) {
+function determineCrassMessage(temp, city, info) {
   var message;
 
   // TEST DATA: kinda for screenshots
@@ -273,6 +285,8 @@ function determineCrassMessage(temp, city) {
     else
       message = MF.crazies[getRandomInt(0,MF.crazies.length - 1)]
   }
+
+  message += info;
 
   showWeather(temp, city, message);
 }
