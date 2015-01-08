@@ -21,7 +21,8 @@ var MF = {
     "Hotter than that red-headed pig-tailed freckle-faced hamburger-eating french-fry-frosty-dippin slut.",
     "so muggy, it feels like im standing in a puddle of dick cheese",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
-    "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight."
+    "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight.",
+    "The Pheonix + The Human Torch, aren't as hot as your junk is right now"
   ],
   nineties: [
     "You must be almost naked, shit is hot.",
@@ -39,7 +40,8 @@ var MF = {
     "As Dan would say, “shit’s fucked up.” That means it’s good.",
     "Cuddle season is over. It's 'Get the hell away from me, it's hot as fuck' season.",
     "I hope my anus and genitals roasting in this weather all day doesn't turn you off from giving me oral sex tonight.",
-    "Holy shit, fuckin amazeballs."
+    "Holy shit, fuckin amazeballs.",
+    "The Pheonix + The Human Torch, aren't as hot as your junk is right now"
   ],
   eighties: [
     "Fuck yeah. Today is a nice day bitches. Soak that shit up.",
