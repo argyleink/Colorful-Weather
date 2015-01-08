@@ -10,7 +10,8 @@ var MF = {
     "Holy balls! Your city is melting, get the fuck out.",
     "Hide yo kids, hide yo wives. It’s fuckin hot.",
     "Hot damn mutha fucka, find shade bitch.",
-    "Ouch, shit’s hot outside. Nice day to stay inside.",
+    "Hotter than Dr. Manhattan's ass crack out here.",
+    "Ouch, shit’s hot outside. Fuckin stay inside.",
     "I hope you’re around A/C, otherwise you're dinner.",
     "Hotter than the mutha fuckin hinges of hell.",
     "Hotter than a whore-house on nickel night",
@@ -113,7 +114,8 @@ var MF = {
     "It's colder than a fart in a dead Eskimo",
     "Your tits must be gone, you froze them off somewhere back there.",
     "Frozen lips are everywhere.",
-    "Could freeze the balls off of a monkey!"
+    "Could freeze the balls off of a monkey!",
+    "Even The Snow Miser think this shit is cold. Damn!"
   ],
   twenties: [
     "Cold as a witches left tit.",
@@ -127,7 +129,8 @@ var MF = {
     "You'd make poopsicles if you pooped right now. They'd roll.",
     "F-f-f-f-f-f-u-u-u-u-c-c-c-k-k-k-k- k-k-k k-k-k-k-k.",
     "So cold you need a sock for your dick, or it might freeze off.",
-    "It could turn piss to ice before it hits the ground!"
+    "It could turn piss to ice before it hits the ground!",
+    "Even The Snow Miser think this shit is cold. Damn!"
   ],
   crazies: [
     "Fuckin crazy, Armageddon shit. Check your fuckin bucket list.",
@@ -140,7 +143,8 @@ var MF = {
     "Wait bitch...",
     "Fuckin wait...",
     "Fuck again...",
-    "FUCK YOUUUU"
+    "FUCK YOUUUU",
+    "Wait fucker"
   ]
 };
 
@@ -182,7 +186,7 @@ function locationSuccess(pos) {
 }
 
 function locationError(err) {
-  loading.text('GPS broke yo');
+  loading.text('Fuck. No GPS.');
   console.warn('location error (' + err.code + '): ' + err.message);
 }
 
@@ -218,7 +222,7 @@ function getWeather(latitude, longitude) {
     },
     function(error) {
       // Failure!
-      loading.text('Fuckin failed.');
+      loading.text('Fuck. No web.');
       console.log('Failed fetching weather data: ' + error);
     }
   );
