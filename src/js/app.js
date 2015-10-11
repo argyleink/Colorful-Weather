@@ -145,7 +145,7 @@ var MF = {
     "Wait bitch...",
     "Fuckin wait...",
     "Fuck again...",
-    "FUCK YOUUUU",
+    "Chill bitch",
     "Wait fucker"
   ]
 };
@@ -195,12 +195,12 @@ function locationError(err) {
 function getWeather(latitude, longitude) {
   // Make the request
   ajax({
-      url: 'http://api.openweathermap.org/data/2.5/weather?lat='+ latitude +'&lon=' + longitude,
+      url: 'https://api.forecast.io/forecast/b8dd5e9062f249ad8a5996fcb9148fda/'+ latitude + ',' + longitude,
       type: 'json'
     },
     function(data) {
       // Success!
-      console.log("Successfully fetched the fucking weather data!");
+      console.info("Successfully fetched the fucking weather data!");
 
       // for (var item in data)
       //   console.log(item + ' ' + data[item]);
@@ -209,18 +209,18 @@ function getWeather(latitude, longitude) {
       var temperature, info;
 
       if (getUserDegreeSetting() === 'c') {
-        temperature = Math.round(data.main.temp - 273.15);
+        temperature = convertToCelcius(Math.round(data.currently.temperature));
       }
       else {
-        temperature = convertToFahrenheit(Math.round(data.main.temp - 273.15));
+        temperature = Math.round(data.currently.temperature);
       }
 
-      info = '\n\n Humidity: ' + data.main.humidity + '%';
-      info += '\n Wind: ' + data.wind.speed;
+      // info = '\nHumidity: ' + data.currently.humidity + '%';
+      // info += '\nWind: ' + data.currently.windSpeed;
       // info += '\n Rain: ' + data.rain['3h'];
-      info += '\n ' + data.weather[0].description;
+      // info += '\n' + data.minutely.summary;
 
-      determineCrassMessage(temperature, data.name, info);
+      determineCrassMessage(temperature, '\n' + data.minutely.summary);
     },
     function(error) {
       // Failure!
@@ -230,15 +230,19 @@ function getWeather(latitude, longitude) {
   );
 }
 
-function convertToFahrenheit(celsius) {
-  return Math.round(celsius * 1.8) + 32;
+function convertToFahrenheit(c) {
+  return Math.round(c * 1.8) + 32;
+}
+
+function convertToCelcius(f){
+  return Math.round((f - 32) * (5/9))
 }
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function determineCrassMessage(temp, city, info) {
+function determineCrassMessage(temp, info) {
   var message;
 
   // TEST DATA: kinda for screenshots
@@ -292,18 +296,19 @@ function determineCrassMessage(temp, city, info) {
       message = MF.crazies[getRandomInt(0,MF.crazies.length - 1)]
   }
 
-  message += info;
+  // message += info;
 
-  showWeather(temp, city, message);
+  showWeather(temp, message, info);
 }
 
-function showWeather(temp, city, message) {
+function showWeather(temp, message, body) {
   Vibe.vibrate('short');
 
   report = new UI.Card({
-    title:      'Fuckin ' + temp + degrees[getUserDegreeSetting()],
-    subtitle:   'in ' + city + '...',
-    body:       message,
+    title:      'Fuckin ' + temp + ' '+ degrees[getUserDegreeSetting()],
+    // subtitle:   'in ' + city + '...',
+    subtitle:   message,
+    body:       body,
     scrollable: true
   }).show();
 
